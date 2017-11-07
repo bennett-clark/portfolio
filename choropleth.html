@@ -143,7 +143,7 @@
 
 			labels.push(
 				'<i style="background:' + getColor(from) + '"></i> ' +
-				from + (to ? '&ndash;' + to : '+'));
+				from + (to ? '&ndash;' + ((to - 0.01).toFixed(2)) : '+'));
 		}
 
 		div.innerHTML = labels.join('<br>');
