@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Google Map API</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<meta charset="utf-8">
+			<meta name="viewport" content ="width=device-width, initial-scale=1"/>
+			<meta name="keywords" content="maps, cartography, vizualization, GIS"/>
+			<title>Labs</title>
+			<link rel="stylesheet" href="css/bootstrap.min.css">
+			<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+			<link rel="stylesheet" href="css/style.css
+			">
+	</head>
+
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main">
+  <div class="brand-name"> <strong>Bennett Clark</strong></div>
+  <div class="address-bar"> <strong>GIS Professional Portfolio</strong> </div>
+
+						<!-- Navigation -->
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>               
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                    <li>
+                        <a href="maps.html">Maps</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+	<header>
+		<div class="thumbnail portfolio-thumbnail">
+			<strong>Lab 1.2</strong>
+		</div>
+		<!DOCTYPE html>
+			<html>
+  				<head>
+   				 <style>
+    			   #map {
+   				     height: 400px;
+    				 width: 100%;
+  			       }
+   				 </style>
+  				</head>
+ 				 <body>
+  					  <h3><strong>Spectacle Lake, WA</strong></h3>
+ 					   <div id="map"></div>
+  						  <script>
+  						    function initMap() {
+  						      var uluru = {lat: 47.462, lng: -121.281};
+   						      var map = new google.maps.Map(document.getElementById('map'), {
+  							        zoom: 11,
+   							        center: uluru
+  						      });
+  							map.setMapTypeId('terrain');
+  					        var marker = new google.maps.Marker({
+ 						         position: uluru,
+   							     map: map
+   						     });
+  						    }
+  						  </script>
+  						  <script async defer
+  							  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj6C_up84zXpXCqzWvjQrzfMNXVsgx9vk&callback=initMap">
+  						  </script>
+ 				 </body>
+			</html>
+			<p> Above is a simple map using the Google Maps API. It is depicting Spectacle Lake in Washington (which is the image I used as a background for my website). It is one of my favorite hikes along the Pacific Crest Trail. Google's Map API allows a variation of customizable options, you just have to manipulate the code you use to display the web map within your website. In my example I chose to display the terrain to help visualize the landscape. There are several other basic map types that Google Maps API has built in.<br></p>
+	</header>
+	</section>
+
+	<!-- Footer -->
+	<footer id="footer">
+		<ul class="copyright">
+			<li>&copy; Bennett Clark</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+		</ul>
+	</footer>
+
+	</div>
+
+	<!-- Scripts -->
+	<!--[if lte IE 8]><script src="assets/js/respond.min.js"></script><![endif]-->
+	<script>
+		if ('addEventListener' in window) {
+			window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-loading\b/, ''); });
+			document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+		}
+	</script>
+	<script src="scripts/basic.js"></script> 
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"-></script>
+	<script type="text/javascript" src="lib/bootstrap.min.js"></script>
+
+	</body>
+</html>
