@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>  
+  <meta charset="utf-8">
+  <title>Seattle Emergency Facilities</title>  
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+  <!-- Load Leaflet from CDN-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@0.7.7/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@0.7.7/dist/leaflet.js"></script>
+
+  <!-- Load Esri Leaflet from CDN -->
+  <script src="https://cdn.jsdelivr.net/leaflet.esri/1.0.4/esri-leaflet.js"></script>
+  <!-- Load Esri Leaflet Renderers from CDN -->
+<script src="https://cdn.jsdelivr.net/leaflet.esri.renderers/1.0.1/esri-leaflet-renderers.js"></script>
+
+  <style>
+    html,
+    body,
+    #map {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+}
+      #basemaps-wrapper {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 400;
+    background: white;
+    padding: 10px;
+  }
+  #basemaps {
+    margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>    
+    <div id="map"></div>
+    <div id="basemaps-wrapper" class="leaflet-bar">
+  <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
+    <option value="Topographic">Topographic</option>
+    <option value="Streets">Streets</option>
+    <option value="NationalGeographic">National Geographic</option>
+    <option value="Oceans">Oceans</option>
+    <option value="Gray">Gray</option>
+    <option value="DarkGray">Dark Gray</option>
+    <option value="Imagery">Imagery</option>
+    <option value="ShadedRelief">Shaded Relief</option>
+  </select>
+    </div>
+
+    <script>
+        //set the center and appropriate zoom level based on the data that are selected
+        
+  var map = L.map('map').setView([47.6062, -122.3321], 12);
+  var layer = L.esri.basemapLayer('Topographic').addTo(map);
+  var layerLabels;
+
+  function setBasemap(basemap) {
+    if (layer) {
+      map.removeLayer(layer);
+    }
+
+    layer = L.esri.basemapLayer(basemap);
+
+    map.addLayer(layer);
+
+    if (layerLabels) {
+      map.removeLayer(layerLabels);
+    }
+
+    if (basemap === 'ShadedRelief'
+     || basemap === 'Oceans'
+     || basemap === 'Gray'
+     || basemap === 'DarkGray'
+     || basemap === 'Imagery'
+     || basemap === 'Terrain'
+   ) {
+      layerLabels = L.esri.basemapLayer(basemap + 'Labels');
+      map.addLayer(layerLabels);
+    }
+  }
+
+  function changeBasemap(basemaps){
+    var basemap = basemaps.value;
+    setBasemap(basemap);
+  }
+
+var layer = L.esri.basemapLayer('Topographic').addTo(map);
+
+
+//set the wetland variable call the server to then display or add to the map
+  var hospitals = L.esri.featureLayer({url: 'https://gisrevprxy.seattle.gov/arcgis/rest/services/ext/WM_CityGISLayers/MapServer/79'}).addTo(map);
+  var policestation = L.esri.featureLayer({url: 'https://gisrevprxy.seattle.gov/arcgis/rest/services/ext/WM_CityGISLayers/MapServer/78'}).addTo(map);
+  var firestation = L.esri.featureLayer({url: 'https://gisrevprxy.seattle.gov/arcgis/rest/services/ext/WM_CityGISLayers/MapServer/77'}).addTo(map);
+ //customize the popup
+  hospitals.bindPopup(function(feature) { return L.Util.template('<h3>{FACILITY}</h3>', feature.properties); });
+  policestation.bindPopup(function(feature) { return L.Util.template('<h3>{NAME}</h3>', feature.properties); });
+  firestation.bindPopup(function(feature) { return L.Util.template('<h3>{STNID}</h3>', feature.properties); });
+
+//add scale to corner of map
+L.control.scale().addTo(map);
+    
+      </script>    
+</body>
+</html>
