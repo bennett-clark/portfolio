@@ -37,64 +37,18 @@
   </style>
 </head>
 <body>    
-    <div id="map"></div>
-    <div id="basemaps-wrapper" class="leaflet-bar">
-  <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
-    <option value="Topographic">Topographic</option>
-    <option value="Streets">Streets</option>
-    <option value="NationalGeographic">National Geographic</option>
-    <option value="Oceans">Oceans</option>
-    <option value="Gray">Gray</option>
-    <option value="DarkGray">Dark Gray</option>
-    <option value="Imagery">Imagery</option>
-    <option value="ShadedRelief">Shaded Relief</option>
-  </select>
-    </div>
+<div id="map"></div>
+<script>
 
-    <script>
-        //set the center and appropriate zoom level based on the data that are selected
-        
+//set the basemap
   var map = L.map('map').setView([47.6062, -122.3321], 12);
-  var layer = L.esri.basemapLayer('Topographic').addTo(map);
-  var layerLabels;
+  var basemap = L.esri.basemapLayer('DarkGray').addTo(map);
 
-  function setBasemap(basemap) {
-    if (layer) {
-      map.removeLayer(layer);
-    }
-
-    layer = L.esri.basemapLayer(basemap);
-
-    map.addLayer(layer);
-
-    if (layerLabels) {
-      map.removeLayer(layerLabels);
-    }
-
-    if (basemap === 'ShadedRelief'
-     || basemap === 'Oceans'
-     || basemap === 'Gray'
-     || basemap === 'DarkGray'
-     || basemap === 'Imagery'
-     || basemap === 'Terrain'
-   ) {
-      layerLabels = L.esri.basemapLayer(basemap + 'Labels');
-      map.addLayer(layerLabels);
-    }
-  }
-
-  function changeBasemap(basemaps){
-    var basemap = basemaps.value;
-    setBasemap(basemap);
-  }
-
-var layer = L.esri.basemapLayer('Topographic').addTo(map);
-
-
-//set the wetland variable call the server to then display or add to the map
+//set the facilities variable call the server to then display or add to the map
   var hospitals = L.esri.featureLayer({url: 'https://gisrevprxy.seattle.gov/arcgis/rest/services/ext/WM_CityGISLayers/MapServer/79'}).addTo(map);
   var policestation = L.esri.featureLayer({url: 'https://gisrevprxy.seattle.gov/arcgis/rest/services/ext/WM_CityGISLayers/MapServer/78'}).addTo(map);
   var firestation = L.esri.featureLayer({url: 'https://gisrevprxy.seattle.gov/arcgis/rest/services/ext/WM_CityGISLayers/MapServer/77'}).addTo(map);
+  
  //customize the popup
   hospitals.bindPopup(function(feature) { return L.Util.template('<h3>{FACILITY}</h3>', feature.properties); });
   policestation.bindPopup(function(feature) { return L.Util.template('<h3>{NAME}</h3>', feature.properties); });
@@ -103,6 +57,6 @@ var layer = L.esri.basemapLayer('Topographic').addTo(map);
 //add scale to corner of map
 L.control.scale().addTo(map);
     
-      </script>    
+</script>    
 </body>
 </html>
