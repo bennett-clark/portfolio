@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Earthquakes in Past Week</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 3px
+      }
+  /*styles the info box */
+ #info-box {
+      opacity: .8;
+      background-color: white;
+      border: 1px solid black;
+      top: 30px;
+      height: 20px;
+      padding: 10px;
+      position: absolute;
+      right: 30px;
+    }
+  /*styles the legend*/
+  #legend {
+      background: none;
+      padding: 10px;
+      border: none;
+      margin-left: 10px;
+      border-radius: none;
+      position: absolute;
+    }
+   
+    </style>
+    <!--calls the google maps api using my unique key-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMEcmfTe3x_Iq9o0dQY7edGBo_wfgwyjA"></script>
+    <script>
+
+
+var map;
+
+function initialize() {
+  map = new google.maps.Map(document.getElementById('map-canvas'), {
+    zoom: 3,
+    center: {lat: 20, lng: -155}, //centered on Hawaii
+    //night-mode
+      styles: [
+            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'geometry',
+              stylers: [{color: '#263c3f'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#6b9a76'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry',
+              stylers: [{color: '#38414e'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#212a37'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#9ca5b3'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry',
+              stylers: [{color: '#746855'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#1f2835'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#f3d19c'}]
+            },
+            {
+              featureType: 'transit',
+              elementType: 'geometry',
+              stylers: [{color: '#2f3948'}]
+            },
+            {
+              featureType: 'transit.station',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{color: '#17263c'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#515c6d'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.stroke',
+              stylers: [{color: '#17263c'}]
+            }
+          ]
+   // mapTypeId: google.maps.MapTypeId.TERRAIN
+  });
+
+
+ // Load GeoJSON.
+ //I chose all earthquakes in the past week
+  map.data.loadGeoJson('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson');
+
+  // adds information to the info box
+  map.data.addListener('mouseover', function(event) {
+    document.getElementById('info-box').textContent =
+        event.feature.getProperty("mag")+" magnitude on Richter scale"+" location: "+ event.feature.getProperty("place")
+
+  });
+
+//setting the circle size by magnitude of earthquake 
+map.data.setStyle(function(feature) {
+    var magnitude = feature.getProperty('mag');
+    return {
+      icon: getCircle(magnitude)
+    };
+  });
+map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(
+  document.getElementById('legend'));
+
+}
+
+//symbolizing the cirlces
+function getCircle(magnitude) {
+  var circle = {
+    path: google.maps.SymbolPath.CIRCLE,
+    fillColor: 'white',
+    fillOpacity: .4,
+    scale: Math.pow(2, magnitude)/1.5, //size of circles based on magnitude
+    strokeColor: '#800000',
+    strokeWeight: .3
+  };
+  return circle;
+}
+
+function eqfeed_callback(results) {
+  map.data.addGeoJson(results);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+  <body>
+
+    <div id="map-canvas"></div>
+    <div id="info-box">Click a circle for more information</div>
+    <div id="legend">
+     <img src="http://www.bencomeau.com/img/legend.png" alt="Legend">
+    </div>
+    
+  </body>
+</html>
