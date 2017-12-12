@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Safest School Route</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+
+
+	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+		#map {
+			width: 600px;
+			height: 400px;
+		}
+	</style>
+
+	<style>#map { width: 100%; height: 100%; }
+.legend { text-align: left; line-height: 18px; color: black; background-color: #d6d6c2;} .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.95; }</style>
+</head>
+<body>
+
+<div id='map'></div>
+
+<script type="text/javascript">
+
+	var map = L.map('map').setView([ 47.13, -122.4], 10.5);
+	L.tileLayer('https://api.mapbox.com/styles/v1/bennett-clark/cjb3x82zze6a82rr0sio22b0r/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYmVubmV0dC1jbGFyayIsImEiOiJjajkyeW9vdTEzbzljMnFvNGhkajVkZ2g0In0.SG_R8xqoxGzSyzgoOZ3_Bw', {
+	attribution: 'Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	subdomains: 'abcd',
+			
+		}).addTo(map);
+
+        var legend = L.control({position: 'bottomleft'});
+
+        legend.onAdd = function (map) {
+        var div = L.DomUtil.create('div', 'info legend');
+
+            div.innerHTML +=
+            '<img src="images/legend.png" alt="legend" width="160" height="150">';
+
+        return div;
+        };
+
+        legend.addTo(map)
+//	var imageUrl = 'http://students.washington.edu/clarkb7/images/legend.png';
+
+//	L.imageOverlay(imageUrl).addTo(map);
+
+</script>
+
+</body>
+</html>
